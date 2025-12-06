@@ -8,7 +8,25 @@
                     <h3>Pasien</h3>
                </div>
                <div class="card-body">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPasien">Tambah</button>
+<div class="d-flex justify-content-between align-items-center mb-3">
+     <!-- Tombol Tambah -->
+     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPasien">
+          Tambah
+     </button>
+
+     <!-- Filter Rumah Sakit -->
+     <div class="d-flex align-items-center">
+          <label for="filter_rs" class="me-2 mb-0">Filter:</label>
+          <select id="filter_rs" class="form-control select2" style="min-width: 220px;">
+               <option value="">-- Semua Rumah Sakit --</option>
+               @foreach($rs as $r)
+                    <option value="{{ $r->id }}">{{ $r->nama_rumah_sakit }}</option>
+               @endforeach
+          </select>
+     </div>
+</div>
+
+
                     <hr>
                     <div class="table-responsive">
                          <table class="table table-striped" id="tabel-pasien">
@@ -144,23 +162,32 @@
 {{-- Datatable --}}
 <script>
 $(document).ready(function() {
-     $('.select2').select2({
-          theme: 'bootstrap-5',
-          dropdownParent: $('#modalPasien')
-     });
-     $('#tabel-pasien').DataTable({
-          processing: true,
-          serverSide: true,
-          ajax: "{{ route('pasien.index') }}",
-          columns: [
-               { data: 'DT_RowIndex', className: 'text-center', orderable: false, searchable: false },
-               { data: 'nama_pasien' },
-               { data: 'alamat' },
-               { data: 'telepon' },
-               { data: 'rs.nama_rumah_sakit' },
-               { data: 'action', orderable: false, searchable: false }
-          ]
-     });
+
+    // Inisialisasi DataTable dan simpan instance ke variabel
+    var table = $('#tabel-pasien').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "{{ route('pasien.index') }}",
+            data: function(d) {
+                d.rumah_sakit_id = $('#filter_rs').val(); // kirim filter ke server
+            }
+        },
+        columns: [
+            { data: 'DT_RowIndex', className: 'text-center', orderable: false, searchable: false },
+            { data: 'nama_pasien' },
+            { data: 'alamat' },
+            { data: 'telepon' },
+            { data: 'rs.nama_rumah_sakit' },
+            { data: 'action', orderable: false, searchable: false }
+        ]
+    });
+
+    // Reload DataTable saat filter berubah
+    $('#filter_rs').change(function() {
+        table.ajax.reload(); // gunakan instance DataTable
+    });
+
 });
 </script>
 
@@ -291,6 +318,8 @@ $(document).ready(function() {
           dropdownParent: $('#editPasienModal'),
           width: '100%'
      });
+
+     $('#filter_rs').select2();
 });
 
 </script>

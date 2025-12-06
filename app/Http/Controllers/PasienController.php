@@ -15,7 +15,11 @@ class PasienController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
-            return DataTables::of(Pasien::with('rs')->get())
+            $pasien = Pasien::with('rs');
+            if ($request->rumah_sakit_id) {
+                $pasien->where('rumah_sakit_id', $request->rumah_sakit_id);
+            }
+            return DataTables::of($pasien->get())
                 ->addIndexColumn()
                 ->addColumn('action', function ($row){
                     $btn  = '<button type="button" class="btn btn-warning btn-sm me-1 btn-edit" 
