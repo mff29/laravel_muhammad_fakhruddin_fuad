@@ -8,24 +8,20 @@
                     <h3>Pasien</h3>
                </div>
                <div class="card-body">
-<div class="d-flex justify-content-between align-items-center mb-3">
-     <!-- Tombol Tambah -->
-     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPasien">
-          Tambah
-     </button>
-
-     <!-- Filter Rumah Sakit -->
-     <div class="d-flex align-items-center">
-          <label for="filter_rs" class="me-2 mb-0">Filter:</label>
-          <select id="filter_rs" class="form-control select2" style="min-width: 220px;">
-               <option value="">-- Semua Rumah Sakit --</option>
-               @foreach($rs as $r)
-                    <option value="{{ $r->id }}">{{ $r->nama_rumah_sakit }}</option>
-               @endforeach
-          </select>
-     </div>
-</div>
-
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalPasien">
+                              Tambah
+                         </button>
+                         <div class="d-flex align-items-center">
+                              <label for="filter_rs" class="me-2 mb-0">Filter:</label>
+                              <select id="filter_rs" class="form-control select2" style="min-width: 220px;">
+                                   <option value="">-- Semua Rumah Sakit --</option>
+                                   @foreach($rs as $r)
+                                        <option value="{{ $r->id }}">{{ $r->nama_rumah_sakit }}</option>
+                                   @endforeach
+                              </select>
+                         </div>
+                    </div>
 
                     <hr>
                     <div class="table-responsive">
