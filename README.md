@@ -12,20 +12,18 @@
 Requirement :
 Laravel, jquery, Bootstrap
 
-Buatkan halaman login, login menggunakan username, bukan email:
-- Halaman setelah login adalah CRUD. Data Rumah Sakit, struktur tabelnya-nya : ID, Nama Rumah Sakit, Alamat, Email, Telepon
-- CRUD berikutnya Data Pasien, struktur tabelnya : ID, Nama Pasien, Alamat, No Telpon, ID Rumah Sakit
-- Relasi tabel Data Pasien dengan tabel Rumah Sakit.
-- Untuk tombol hapus/delete menggunakan ajax.
-- Pada Crud Data Pasien, buatkan Dropdown filter berdasarkan Rumah Sakit, menggunakan ajax.
-
-Sertakan juga script migration dan seed-nya 
+## Fitur
+- Authentication (register, login, logout)
+- CRUD Rumah Sakit
+- CRUD Pasien
 
 ## langkah cek
 - pastikan requirement sesuai
 - clone repo
 - jalankan: composer install
+- jalankan: php artisan key:generate
 - jalankan: php artisan migrate --seed
+- jalankan: php artisan serve
 
 ## Login dummy
 username: admin
