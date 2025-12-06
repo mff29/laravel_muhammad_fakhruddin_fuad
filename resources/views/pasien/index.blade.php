@@ -161,34 +161,30 @@
 
 {{-- Datatable --}}
 <script>
-$(document).ready(function() {
+     $(document).ready(function() {
+          var table = $('#tabel-pasien').DataTable({
+               processing: true,
+               serverSide: true,
+               ajax: {
+                    url: "{{ route('pasien.index') }}",
+                    data: function(d) {
+                         d.rumah_sakit_id = $('#filter_rs').val();
+                    }
+               },
+               columns: [
+                    { data: 'DT_RowIndex', className: 'text-center', orderable: false, searchable: false },
+                    { data: 'nama_pasien' },
+                    { data: 'alamat' },
+                    { data: 'telepon' },
+                    { data: 'rs.nama_rumah_sakit' },
+                    { data: 'action', orderable: false, searchable: false }
+               ]
+          });
 
-    // Inisialisasi DataTable dan simpan instance ke variabel
-    var table = $('#tabel-pasien').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: "{{ route('pasien.index') }}",
-            data: function(d) {
-                d.rumah_sakit_id = $('#filter_rs').val(); // kirim filter ke server
-            }
-        },
-        columns: [
-            { data: 'DT_RowIndex', className: 'text-center', orderable: false, searchable: false },
-            { data: 'nama_pasien' },
-            { data: 'alamat' },
-            { data: 'telepon' },
-            { data: 'rs.nama_rumah_sakit' },
-            { data: 'action', orderable: false, searchable: false }
-        ]
-    });
-
-    // Reload DataTable saat filter berubah
-    $('#filter_rs').change(function() {
-        table.ajax.reload(); // gunakan instance DataTable
-    });
-
-});
+          $('#filter_rs').change(function() {
+               table.ajax.reload();
+          });
+     });
 </script>
 
 {{-- Tambah --}}
